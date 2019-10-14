@@ -1,1 +1,1 @@
-# HTWG_SE_Chess
+# HTWG_SE_ConnectFour

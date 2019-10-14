@@ -12,5 +12,5 @@ println("hallo reif")
 
 case class project(name:String)
 
-val myproject = project("HTWG_SE_Chess")
+val myproject = project("HTWG_SE_ConnectFour")
 println(myproject.name)

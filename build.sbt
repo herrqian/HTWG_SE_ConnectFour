@@ -1,4 +1,4 @@
-name := "chess"
+name := "Connect Four in scala"
 
 version := "0.1"
 

@@ -8,4 +8,12 @@ case class Matrix[T] (rows:Vector[Vector[T]]) {
   def cell(row:Int, col:Int):T = rows (row)(col)
   def fill (filling:T):Matrix[T]= copy( Vector.tabulate(row, col){(row, col) => filling})
   def replaceCell(row:Int, col:Int, cell:T):Matrix[T] = copy(rows.updated(row, rows(row).updated(col, cell)))
+
+  override def toString() : String = {
+    var stringVal = ""
+    rows.foreach{stringVal = stringVal + System.lineSeparator()
+      x => x foreach{x => stringVal = stringVal + x + " "}
+        stringVal = stringVal + System.lineSeparator()}
+    stringVal
+  }
 }

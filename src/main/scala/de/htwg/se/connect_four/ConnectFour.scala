@@ -7,7 +7,7 @@ import scala.io.StdIn
 
 object ConnectFour {
   import scala.io.StdIn.readLine
-    var grid = new Grid(3,3)
+    var grid = new Grid(7,6)
     val tui = new Tui
 
     def main(args: Array[String]): Unit = {

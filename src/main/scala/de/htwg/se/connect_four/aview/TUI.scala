@@ -7,13 +7,23 @@ class Tui {
   def processInputLine(input: String, grid:Grid):Grid = {
     input match {
       case "q" => grid
-      case "n" => new Grid(3,3)
+      case "n" => new Grid(7,6)
       case _ => {
-        input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-          case row :: column :: value :: Nil => grid.set(row, column, value)
+        input.toList.filter(c => c != ' ') match {
+          case 'i' :: column :: value :: Nil => {
+            checkBottom(grid, column.asDigit, value.asDigit)
+          }
           case _ => grid
         }
       }
     }
+  }
+  def checkBottom(grid: Grid, column: Int, value: Int): Grid = {
+    for (i <- grid.cells.row-1 to 0 by -1){
+      if (grid.col(column).cell(i).equals(Cell(0))) {
+        return grid.set(i, column, value)
+      }
+    }
+    grid
   }
 }

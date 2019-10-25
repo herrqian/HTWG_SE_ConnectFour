@@ -1,14 +1,22 @@
 package de.htwg.se.connect_four
 
-import de.htwg.se.connect_four.model.Player
+import de.htwg.se.connect_four.aview.Tui
+import de.htwg.se.connect_four.model.{Grid, Player}
 
 import scala.io.StdIn
 
 object ConnectFour {
-  def main(args: Array[String]): Unit = {
-    println("please give your player name:")
-    val playername = StdIn.readLine()
-    val player = Player(playername)
-    println(s"$player, welcome to Connect Four")
-  }
+  import scala.io.StdIn.readLine
+    var grid = new Grid(7,6)
+    val tui = new Tui
+
+    def main(args: Array[String]): Unit = {
+      var input: String = ""
+
+      do {
+        println(grid.toString)
+        input = readLine()
+        grid = tui.processInputLine(input, grid)
+      } while (input != "q")
+    }
 }

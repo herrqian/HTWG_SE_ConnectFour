@@ -7,7 +7,7 @@ class Tui {
   def processInputLine(input: String, grid:Grid):Grid = {
     input match {
       case "q" => grid
-      case "n" => new Grid(7,6)
+      case "n" => new Grid(6,7)
       case _ => {
         input.toList.filter(c => c != ' ') match {
           case 'i' :: column :: value :: Nil => {

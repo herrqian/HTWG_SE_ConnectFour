@@ -44,6 +44,10 @@ case class Grid(cells: Matrix[Cell]) {
       }
     House(mvec.toVector)
   }
+
+  override def toString: String = {
+    cells.toString
+  }
 }
 
 case class House(private val cells:Vector[Cell]) {

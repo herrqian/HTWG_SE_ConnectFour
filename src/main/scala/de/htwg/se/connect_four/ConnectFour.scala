@@ -14,6 +14,7 @@ object ConnectFour {
       println("Please give your name:")
       input = readLine()
       println(s"$input, welcome to Connect Four")
+
       do {
         println(grid.toString)
         input = readLine()

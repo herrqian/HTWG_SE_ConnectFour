@@ -11,7 +11,7 @@ object ConnectFour {
     def main(args: Array[String]): Unit = {
       var input: String = ""
       println("Please give your name:")
-      val player1 = Player(readLine())
+      val player1 = tui.initPlayer(readLine())
       println(s"$player1, welcome to Connect Four")
 
       do {

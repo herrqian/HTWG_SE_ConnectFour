@@ -8,14 +8,11 @@ class Tui {
     input match {
       case "q" => grid
       case "n" => new Grid(6,7)
-      case _ => {
-        input.toList.filter(c => c != ' ') match {
-          case 'i' :: column :: value :: Nil => {
-            checkBottom(grid, column.asDigit, value.asDigit)
-          }
+      case _ => input.toList.filter(c => c != ' ') match {
+          case 'i' :: column :: value :: Nil => checkBottom(grid, column.asDigit, value.asDigit)
           case _ => grid
         }
-      }
+
     }
   }
   def checkBottom(grid: Grid, column: Int, value: Int): Grid = {
@@ -26,4 +23,6 @@ class Tui {
     }
     grid
   }
+
+  def initPlayer(input:String): Player=Player(input)
 }

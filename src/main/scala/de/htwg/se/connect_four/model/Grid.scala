@@ -11,10 +11,10 @@ case class Grid(cells: Matrix[Cell]) {
   def col(col:Int):House=House(cells.rows.map(row=>row(col)))
 
   def link_diagonal(row:Int, col:Int):House = {
-    var mrow = row-1
-    var mcol = col-1
+    var mrow = row
+    var mcol = col
     val mvec = ArrayBuffer[Cell]()
-    while (mrow < cells.row && mcol > 0) {
+    while (mrow < cells.row - 1 && mcol > 0) {
       mrow = mrow + 1
       mcol = mcol - 1
     }
@@ -28,8 +28,8 @@ case class Grid(cells: Matrix[Cell]) {
 
 
   def right_diagonal(row: Int, col: Int):House = {
-    var mrow = row-1
-    var mcol = col-1
+    var mrow = row
+    var mcol = col
     val mvec = ArrayBuffer[Cell]()
     while (mrow > 0 && mcol > 0) {
       mrow = mrow - 1

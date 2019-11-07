@@ -31,8 +31,8 @@ object ConnectFour {
         val flag = result._2
         if (flag != (-1, -1) && input != "n") {
           if (tui.checkWinner(grid, flag._1, flag._2)) {
-            println("you win!")
-            input = "n"
+            println("player"+tui.currentPlayer() + " win!")
+            break
           } else {tui.changeTurn()}
         }
       } while (input != "q")

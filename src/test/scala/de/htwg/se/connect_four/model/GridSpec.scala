@@ -53,6 +53,13 @@ class GridSpec extends WordSpec with Matchers {
         smallGrid.col(1).cell(0) should be(Cell(2))
         smallGrid.col(1).cell(1) should be(Cell(4))
       }
+      "have Houses with the diagonal" in {
+        smallGrid.link_diagonal(1,0).cell(0) should be(Cell(3))
+        smallGrid.link_diagonal(1, 0).cell(1) should be(Cell(2))
+        smallGrid.right_diagonal(1,0).cell(0) should be(Cell(3))
+        smallGrid.right_diagonal(1,1).cell(0) should be(Cell(1))
+        smallGrid.right_diagonal(1,1).cell(1) should be(Cell(4))
+      }
     }
   }
 }

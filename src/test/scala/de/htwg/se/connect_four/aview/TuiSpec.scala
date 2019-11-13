@@ -8,8 +8,12 @@ class TuiSpec extends WordSpec with Matchers {
     "his function processInputLine is to test" should {
       val tui = new Tui
       "input n will create a new grid" in {
-        val new_grid = tui.processInputLine("n", new Grid(2,3))._1
-        new_grid should be(new Grid(6,7))
+        val new_grid_small = tui.processInputLine("n small", new Grid(2,3))._1
+        new_grid_small should be(new Grid(6,7))
+        val new_grid_middle = tui.processInputLine("n middle", new Grid(2,3))._1
+        new_grid_middle should be(new Grid(10,11))
+        val new_grid_huge = tui.processInputLine("n huge", new Grid(2,3))._1
+        new_grid_huge should be(new Grid(16,17))
       }
       "input i1 will insert a value to column 1" in {
         val new_grid = tui.processInputLine("i1", new Grid(6,7))._1

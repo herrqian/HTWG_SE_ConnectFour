@@ -9,9 +9,15 @@ class Tui {
   def processInputLine(input: String, grid: Grid): (Grid, (Int, Int)) = {
     input match {
       case "q" => (grid, (0, 0))
-      case "n" =>
+      case "n small" =>
         playerList = Array(true, false)
         (new Grid(6, 7), (0, 0))
+      case "n middle" =>
+        playerList = Array(true, false)
+        (new Grid(10,11),(0,0))
+      case "n huge" =>
+        playerList = Array(true,false)
+        (new Grid(16, 17), (0,0))
       case _ =>
         input.toList.filter(c => c != ' ') match {
           case 'i' :: column :: Nil =>

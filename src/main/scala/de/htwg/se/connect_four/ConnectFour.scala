@@ -29,11 +29,11 @@ object ConnectFour {
         val result = tui.processInputLine(input, grid)
         grid = result._1
         val flag = result._2
-        if (flag != (-1, -1) && input != "n") {
+        if (flag != (-1, -1) && !input.contains("n")) {
           if (tui.checkWinner(grid, flag._1, flag._2)) {
             println("player"+tui.currentPlayer() + " win!")
             break
-          } else {tui.changeTurn()}
+          } else if (!input.contains("n")) {tui.changeTurn()}
         }
       } while (input != "q")
     }

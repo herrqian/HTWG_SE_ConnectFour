@@ -7,10 +7,10 @@ case class Grid(cells: Matrix[Cell]) {
   val size: Int = cells.size
   def cell(row:Int, col: Int): Cell=cells.cell(row,col)
   def set(row:Int, col: Int, value:Int): Grid=copy(cells.replaceCell(row,col,Cell(value)))
-  def row(row: Int):House=House(cells.rows(row))
-  def col(col:Int):House=House(cells.rows.map(row=>row(col)))
+  def row(row: Int):Field=Field(cells.rows(row))
+  def col(col:Int):Field=Field(cells.rows.map(row=>row(col)))
 
-  def link_diagonal(row:Int, col:Int):House = {
+  def link_diagonal(row:Int, col:Int):Field = {
     var mrow = row
     var mcol = col
     val mvec = ArrayBuffer[Cell]()
@@ -23,11 +23,11 @@ case class Grid(cells: Matrix[Cell]) {
       mrow = mrow - 1
       mcol = mcol + 1
     }
-    House(mvec.toVector)
+    Field(mvec.toVector)
   }
 
 
-  def right_diagonal(row: Int, col: Int):House = {
+  def right_diagonal(row: Int, col: Int):Field = {
     var mrow = row
     var mcol = col
     val mvec = ArrayBuffer[Cell]()
@@ -40,13 +40,8 @@ case class Grid(cells: Matrix[Cell]) {
       mrow = mrow + 1
       mcol = mcol + 1
     }
-    House(mvec.toVector)
+    Field(mvec.toVector)
   }
 
   override def toString: String = cells.toString
-}
-
-case class House(private val cells:Vector[Cell]) {
-  def cell(index:Int):Cell=cells(index)
-  def getCells: Vector[Cell] = cells
 }

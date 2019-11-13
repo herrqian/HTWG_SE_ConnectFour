@@ -14,6 +14,4 @@ class PlayerSpec extends WordSpec with Matchers {
       }
     }
   }
-
-
 }

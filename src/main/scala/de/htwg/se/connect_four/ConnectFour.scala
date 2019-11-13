@@ -2,8 +2,10 @@ package de.htwg.se.connect_four
 
 import de.htwg.se.connect_four.aview.Tui
 import de.htwg.se.connect_four.model.{Grid, Player}
+
 import scala.io.StdIn.readLine
 import util.control.Breaks._
+
 
 object ConnectFour {
     var grid = new Grid(6,7)
@@ -11,12 +13,14 @@ object ConnectFour {
 
     def main(args: Array[String]): Unit = {
       var input: String = ""
+
       println("Player 1 please type in your name:")
       val player1 = Player(readLine())
       var input2: String = ""
       println("Player 2 please type in your name:")
       val player2 = Player(readLine())
       println(s"$player1 and $player2, Welcome to Connect Four")
+
 
       do {
         if (tui.getTurn(0)) {

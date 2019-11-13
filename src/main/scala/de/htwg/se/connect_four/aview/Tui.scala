@@ -4,6 +4,7 @@ import de.htwg.se.connect_four.model.{Grid, Cell, Matrix, Player}
 
 class Tui {
 
+
   var playerList = Array(true, false)
 
   def processInputLine(input: String, grid: Grid): (Grid, (Int, Int)) = {
@@ -43,6 +44,7 @@ class Tui {
         }
     }
   }
+
 
   def checkBottom(grid: Grid, column: Int, value: Int): (Grid, Int) = {
     for (i <- grid.cells.row - 1 to 0 by -1) {

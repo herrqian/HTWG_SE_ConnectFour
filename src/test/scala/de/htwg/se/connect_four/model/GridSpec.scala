@@ -14,6 +14,10 @@ class GridSpec extends WordSpec with Matchers {
         val awkwardGrid = Grid(new Matrix(2, 4, Cell(0)))
         val testGrid = Grid(Matrix[Cell](Vector(Vector(Cell(0), Cell(0), Cell(0)), Vector(Cell(0), Cell(0)))))
       }
+     "toString function tested" in {
+       val grid = new Grid(2,3)
+       grid.toString should be("0 0 0 \n0 0 0 \n")
+     }
     }
     "created properly but empty" should {
       val smallGrid = new Grid(4, 5)
@@ -65,6 +69,13 @@ class GridSpec extends WordSpec with Matchers {
         smallGrid.right_diagonal(1,1).getCells should be(Vector(Cell(1), Cell(5), Cell(9)))
         smallGrid.link_diagonal(1,0).getCells should be(Vector(Cell(4), Cell(2)))
         smallGrid.right_diagonal(1,0).getCells should be(Vector(Cell(4), Cell(8)))
+      }
+      "have Houses with the diagonal" in {
+        smallGrid.link_diagonal(1,0).cell(0) should be(Cell(3))
+        smallGrid.link_diagonal(1, 0).cell(1) should be(Cell(2))
+        smallGrid.right_diagonal(1,0).cell(0) should be(Cell(3))
+        smallGrid.right_diagonal(1,1).cell(0) should be(Cell(1))
+        smallGrid.right_diagonal(1,1).cell(1) should be(Cell(4))
       }
     }
   }

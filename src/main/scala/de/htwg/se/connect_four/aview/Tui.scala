@@ -1,10 +1,13 @@
 package de.htwg.se.connect_four.aview
 
-import de.htwg.se.connect_four.model.{Grid, Cell, Matrix, Player}
+import de.htwg.se.connect_four.model.{Cell, Grid}
+import de.htwg.se.connect_four.controller.Controller
+import de.htwg.se.connect_four.util.Observer
 
-class Tui {
+class Tui(controller: Controller) extends Observer{
 
-
+  controller.add(this)
+  //todo:continue to code
   var playerList = Array(true, false)
 
   def processInputLine(input: String, grid: Grid): (Grid, (Int, Int)) = {
@@ -99,4 +102,6 @@ class Tui {
     }
     2
   }
+
+  override def update(): Unit = println(controller.gridToString)
 }

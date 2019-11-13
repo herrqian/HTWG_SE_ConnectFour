@@ -1,7 +1,5 @@
 package de.htwg.se.connect_four.model
 
-import com.sun.java.swing.plaf.windows.WindowsTreeUI.CollapsedIcon
-
 import scala.collection.mutable.ArrayBuffer
 
 case class Grid(cells: Matrix[Cell]) {
@@ -9,14 +7,14 @@ case class Grid(cells: Matrix[Cell]) {
   val size: Int = cells.size
   def cell(row:Int, col: Int): Cell=cells.cell(row,col)
   def set(row:Int, col: Int, value:Int): Grid=copy(cells.replaceCell(row,col,Cell(value)))
-  def row(row: Int):House=House(cells.rows(row))
-  def col(col:Int):House=House(cells.rows.map(row=>row(col)))
+  def row(row: Int):Field=Field(cells.rows(row))
+  def col(col:Int):Field=Field(cells.rows.map(row=>row(col)))
 
-  def link_diagonal(row:Int, col:Int):House = {
+  def link_diagonal(row:Int, col:Int):Field = {
     var mrow = row
     var mcol = col
     val mvec = ArrayBuffer[Cell]()
-    while (mrow < cells.row && mcol > 0) {
+    while (mrow < cells.row - 1 && mcol > 0) {
       mrow = mrow + 1
       mcol = mcol - 1
     }
@@ -25,11 +23,11 @@ case class Grid(cells: Matrix[Cell]) {
       mrow = mrow - 1
       mcol = mcol + 1
     }
-    House(mvec.toVector)
+    Field(mvec.toVector)
   }
 
 
-  def right_diagonal(row: Int, col: Int):House = {
+  def right_diagonal(row: Int, col: Int):Field = {
     var mrow = row
     var mcol = col
     val mvec = ArrayBuffer[Cell]()
@@ -38,18 +36,12 @@ case class Grid(cells: Matrix[Cell]) {
       mcol = mcol - 1
     }
     while (mrow < cells.row && mcol < cells.col) {
-        mvec.append(cells.cell(mrow, mcol))
-        mrow = mrow + 1
-        mcol = mcol + 1
-      }
-    House(mvec.toVector)
+      mvec.append(cells.cell(mrow, mcol))
+      mrow = mrow + 1
+      mcol = mcol + 1
+    }
+    Field(mvec.toVector)
   }
 
-  override def toString: String = {
-    cells.toString
-  }
-}
-
-case class House(private val cells:Vector[Cell]) {
-  def cell(index:Int):Cell=cells(index)
+  override def toString: String = cells.toString
 }

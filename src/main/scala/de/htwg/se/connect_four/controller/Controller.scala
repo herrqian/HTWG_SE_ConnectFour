@@ -3,17 +3,21 @@ package de.htwg.se.connect_four.controller
 import de.htwg.se.connect_four.model.{Cell, Grid}
 import de.htwg.se.connect_four.util.Observable
 
-class Controller(var grid: Grid) extends Observable{
+class Controller(var grid: Grid) extends Observable {
 
   var playerList = Array(true, false)
 
-  def createEmptyGrid(row:Int, col:Int): Unit = {
-      grid = new Grid(row, col)
-      notifyObservers()
+  def createEmptyGrid(row: Int, col: Int): Unit = {
+    grid = new Grid(row, col)
+    notifyObservers()
   }
 
   def setBottom(column: Int): Int = {
-    val value = if (playerList(0)) { 1 } else { 2 }
+    val value = if (playerList(0)) {
+      1
+    } else {
+      2
+    }
     if (column > grid.cells.col - 1) {
       println("wrong input, repeat your turn!")
       notifyObservers()

@@ -24,9 +24,20 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.setBottom(0)
         observer.updated should be(true)
         controller.grid.cell(3, 0).value should be(1)
+        controller.setBottom(1)
+        observer.updated should be(true)
+        controller.grid.cell(3, 1).value should be(1)
+        controller.setBottom(2)
+        observer.updated should be(true)
+        controller.grid.cell(3, 2).value should be(1)
+        controller.setBottom(3)
+        observer.updated should be(true)
+        controller.grid.cell(3, 3).value should be(1)
+        controller.setBottom(10) should be(-1)
       }
       "test the checkWinner function" in {
         controller.checkWinner(0,0) should be(false)
+        controller.checkWinner(3,3) should be(true)
       }
       "test the getTrun function" in {
         controller.getTurn(0) should be(true)

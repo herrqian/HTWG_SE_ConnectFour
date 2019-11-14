@@ -19,7 +19,6 @@ class Controller(var grid: Grid) extends Observable {
       2
     }
     if (column > grid.cells.col - 1) {
-      println("wrong input, repeat your turn!")
       notifyObservers()
       return -1
     }

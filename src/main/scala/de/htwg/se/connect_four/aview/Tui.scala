@@ -23,7 +23,7 @@ class Tui(controller: Controller) extends Observer {
       case _ =>
         input.toList.filter(c => c != ' ') match {
           case 'i' :: column :: Nil =>
-            val row_number = controller.setBottom(column.asDigit)
+            val row_number = controller.setValueToBottom(column.asDigit)
             if (row_number == -1) {
               println("cant insert at this column, repeat your turn!")
             }

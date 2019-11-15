@@ -21,19 +21,19 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.grid.size should be(20)
       }
       "notify its Observer after setting a cell" in {
-        controller.setBottom(0)
+        controller.setValueToBottom(0)
         observer.updated should be(true)
         controller.grid.cell(3, 0).value should be(1)
-        controller.setBottom(1)
+        controller.setValueToBottom(1)
         observer.updated should be(true)
         controller.grid.cell(3, 1).value should be(1)
-        controller.setBottom(2)
+        controller.setValueToBottom(2)
         observer.updated should be(true)
         controller.grid.cell(3, 2).value should be(1)
-        controller.setBottom(3)
+        controller.setValueToBottom(3)
         observer.updated should be(true)
         controller.grid.cell(3, 3).value should be(1)
-        controller.setBottom(10) should be(-1)
+        controller.setValueToBottom(10) should be(-1)
       }
       "test the checkWinner function" in {
         controller.checkWinner(0,0) should be(false)

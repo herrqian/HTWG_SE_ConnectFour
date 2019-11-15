@@ -12,7 +12,7 @@ class Controller(var grid: Grid) extends Observable {
     notifyObservers()
   }
 
-  def setBottom(column: Int): Int = {
+  def setValueToBottom(column: Int): Int = {
     val value = if (playerList(0)) {
       1
     } else {

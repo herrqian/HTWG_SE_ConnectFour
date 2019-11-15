@@ -17,7 +17,6 @@ object ConnectFour {
 
       println("Player 1 please type in your name:")
       val player1 = Player(readLine())
-      var input2: String = ""
       println("Player 2 please type in your name:")
       val player2 = Player(readLine())
       println(s"$player1 and $player2, Welcome to Connect Four")

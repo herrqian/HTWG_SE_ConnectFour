@@ -26,6 +26,7 @@ class Tui(controller: Controller) extends Observer {
             val row_number = controller.setValueToBottom(column.asDigit)
             if (row_number == -1) {
               println("cant insert at this column, repeat your turn!")
+              return
             }
             if (controller.checkWinner(row_number, column.asDigit)) {
               printf("The player%s is the winner!\n", controller.currentPlayer().toString)

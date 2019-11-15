@@ -15,12 +15,16 @@ class CellSpec extends WordSpec with Matchers {
       }
     }
     "set to a specific value" should {
-      val nonEmptyCell = Cell(1)
+      var nonEmptyCell = Cell(1)
       "return that value" in {
         nonEmptyCell.value should be(1)
       }
       "be set" in {
         nonEmptyCell.isSet should be(true)
+      }
+      "test set function" in {
+        nonEmptyCell = nonEmptyCell.set(2)
+        nonEmptyCell.value should be(2)
       }
     }
   }

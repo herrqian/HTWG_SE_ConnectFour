@@ -31,6 +31,6 @@ object ConnectFour {
         }
         input = readLine()
         tui.processInputLine(input)
-      } while (input != "q" && !tui.winnercheck)
+      } while (input != "q" && !tui.winnerCheck)
     }
 }

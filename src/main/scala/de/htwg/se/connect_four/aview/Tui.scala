@@ -6,7 +6,7 @@ import de.htwg.se.connect_four.util.Observer
 class Tui(controller: Controller) extends Observer {
 
   controller.add(this)
-  var winnercheck = false
+  var winnerCheck = false
 
   def processInputLine(input: String): Unit = {
     input match {
@@ -30,7 +30,7 @@ class Tui(controller: Controller) extends Observer {
             }
             if (controller.checkWinner(row_number, column.asDigit)) {
               printf("The player%s is the winner!\n", controller.currentPlayer().toString)
-              winnercheck = true
+              winnerCheck = true
             } else {
               controller.changeTurn()
             }

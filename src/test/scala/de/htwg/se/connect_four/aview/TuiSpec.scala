@@ -22,6 +22,12 @@ class TuiSpec extends WordSpec with Matchers {
         val a_grid = new Grid(16, 17).set(15, 1, 1)
         controller.grid should be(a_grid)
       }
+      "input q will do nothing" in {
+        tui.processInputLine("q")
+      }
+      "any non-configured input will do nothing" in {
+        tui.processInputLine("test")
+      }
     }
   }
 }

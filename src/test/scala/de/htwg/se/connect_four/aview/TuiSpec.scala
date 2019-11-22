@@ -28,6 +28,19 @@ class TuiSpec extends WordSpec with Matchers {
       "any non-configured input will do nothing" in {
         tui.processInputLine("test")
       }
+      "input out of bounds will do nothing" in {
+        tui.processInputLine("i9")
+      }
+      "if player has won winnerCheck will be true" in {
+        tui.processInputLine("i1")
+        tui.processInputLine("i2")
+        tui.processInputLine("i1")
+        tui.processInputLine("i2")
+        tui.processInputLine("i1")
+        tui.processInputLine("i2")
+        tui.processInputLine("i1")
+        tui.winnerCheck should be(true)
+      }
     }
   }
 }

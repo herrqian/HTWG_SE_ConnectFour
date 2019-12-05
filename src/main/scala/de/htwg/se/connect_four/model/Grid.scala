@@ -2,7 +2,7 @@ package de.htwg.se.connect_four.model
 
 import scala.collection.mutable.ArrayBuffer
 
-case class Grid(cells: Matrix[Cell]) {
+case class Grid(cells: Matrix[Cell]) extends GridInterface {
   def this(row: Int, col:Int) = this(new Matrix[Cell](row, col, Cell(0)))
   val size: Int = cells.size
   def cell(row:Int, col: Int): Cell=cells.cell(row,col)

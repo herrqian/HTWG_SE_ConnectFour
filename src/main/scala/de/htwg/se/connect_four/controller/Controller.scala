@@ -1,14 +1,18 @@
 package de.htwg.se.connect_four.controller
 
-import de.htwg.se.connect_four.model.{Cell, Grid}
-import de.htwg.se.connect_four.util.Observable
+import de.htwg.se.connect_four.model.{Cell, GridInterface}
+import de.htwg.se.connect_four.util.{Observable, UndoManager}
+import de.htwg.se.connect_four.controller.GameStatus._
+import de.htwg.se.connect_four.model.GridFactory
 
-class Controller(var grid: Grid) extends Observable {
+class Controller(var grid: GridInterface) extends Observable {
 
   var playerList = Array(true, false)
+  var gameStatus: GameStatus = IDLE
+  private val undoManager = new UndoManager
 
-  def createEmptyGrid(row: Int, col: Int): Unit = {
-    grid = new Grid(row, col)
+  def createEmptyGrid(s:String): Unit = {
+    grid = GridFactory.getGrid(s)
     notifyObservers()
   }
 
@@ -24,7 +28,7 @@ class Controller(var grid: Grid) extends Observable {
     }
     for (i <- grid.cells.row - 1 to 0 by -1) {
       if (grid.col(column).cell(i).equals(Cell(0))) {
-        grid = grid.set(i, column, value)
+        undoManager.doStep(new SetCommand(i,column, value, this))
         notifyObservers()
         return i
       }
@@ -78,4 +82,14 @@ class Controller(var grid: Grid) extends Observable {
   }
 
   def gridToString: String = grid.toString
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers()
+  }
+
+  def redo: Unit ={
+    undoManager.redoStep
+    notifyObservers()
+  }
 }

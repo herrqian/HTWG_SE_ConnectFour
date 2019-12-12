@@ -4,7 +4,7 @@ import scala.collection.mutable.ArrayBuffer
 
 case class Grid(cells: Matrix[Cell]) extends GridInterface {
   def this(row: Int, col:Int) = this(new Matrix[Cell](row, col, Cell(0)))
-  val size: Int = cells.size
+  def size: Int = cells.size
   def cell(row:Int, col: Int): Cell=cells.cell(row,col)
   def set(row:Int, col: Int, value:Int): Grid=copy(cells.replaceCell(row,col,Cell(value)))
   def row(row: Int):Field=Field(cells.rows(row))

@@ -16,24 +16,27 @@ class Controller(var grid: GridInterface) extends Observable {
     notifyObservers()
   }
 
-  def setValueToBottom(column: Int): Int = {
+  def setValueToBottom(column: Int): Unit = {
     val value = if (playerList(0)) {
       1
     } else {
       2
     }
-    if (column > grid.cells.col - 1) {
-      notifyObservers()
-      return -1
-    }
     for (i <- grid.cells.row - 1 to 0 by -1) {
       if (grid.col(column).cell(i).equals(Cell(0))) {
         undoManager.doStep(new SetCommand(i,column, value, this))
-        notifyObservers()
-        return i
+        if (this.checkWinner(i, column)) {
+          printf("The player%s is the winner!\n", this.currentPlayer().toString)
+          gameStatus = WIN
+          notifyObservers()
+          return
+        } else {
+          this.changeTurn()
+          notifyObservers()
+          return
+        }
       }
     }
-    -1
   }
 
   def checkWinner(row: Int, col: Int): Boolean = {

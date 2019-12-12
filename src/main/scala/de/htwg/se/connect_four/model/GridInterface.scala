@@ -3,6 +3,8 @@ package de.htwg.se.connect_four.model
 trait GridInterface {
   val cells: Matrix[Cell]
 
+  def size:Int
+
   def cell(row: Int, col: Int): Cell
 
   def set(row: Int, col: Int, value: Int): Grid

@@ -25,17 +25,6 @@ class Tui(controller: Controller) extends Observer {
       case _ =>
         input.toList.filter(c => c != ' ') match {
           case 'i' :: column :: Nil =>
-//            val row_number = controller.setValueToBottom(column.asDigit)
-//            if (row_number == -1) {
-//              println("cant insert at this column, repeat your turn!")
-//              return
-//            }
-//            if (controller.checkWinner(row_number, column.asDigit)) {
-//              printf("The player%s is the winner!\n", controller.currentPlayer().toString)
-//              winnerCheck = true
-//            } else {
-//              controller.changeTurn()
-//            }
             controller.setValueToBottom(column.asDigit)
           case _ =>
             println("wrong input, repeat your turn!")
@@ -46,6 +35,8 @@ class Tui(controller: Controller) extends Observer {
   override def update(): Boolean = {
     println(controller.gridToString)
     println(GameStatus.message(controller.gameStatus))
+    if (controller.gameStatus.equals(GameStatus.WIN))
+      winnerCheck = true
     controller.gameStatus=GameStatus.IDLE
     true
   }

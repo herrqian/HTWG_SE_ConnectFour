@@ -13,23 +13,6 @@ object ConnectFour {
     val tui = new Tui(controller)
 
     def main(args: Array[String]): Unit = {
-      var input: String = ""
-
-      println("Player 1 please type in your name:")
-      val player1 = Player(readLine())
-      println("Player 2 please type in your name:")
-      val player2 = Player(readLine())
-      println(s"$player1 and $player2, Welcome to Connect Four")
-
-      println(controller.gridToString)
-      do {
-        if (controller.getTurn(0)) {
-          println(s"$player1, its your turn!")
-        } else if (controller.getTurn(1)) {
-          println(s"$player2, its your turn!")
-        }
-        input = readLine()
-        tui.processInputLine(input)
-      } while (input != "q" && !tui.winnerCheck)
+      tui.processInputLineStart()
     }
 }

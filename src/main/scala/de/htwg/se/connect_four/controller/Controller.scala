@@ -8,7 +8,7 @@ import de.htwg.se.connect_four.model.GridFactory
 class Controller(var grid: GridInterface) extends Observable {
 
   var playerList = Array(true, false)
-  var gameStatus: GameStatus = IDLE
+  var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
   private val undoManager = new UndoManager
 
   def createEmptyGrid(s:String): Unit = {
@@ -27,7 +27,7 @@ class Controller(var grid: GridInterface) extends Observable {
         undoManager.doStep(new SetCommand(i,column, value, this))
         if (this.checkWinner(i, column)) {
           printf("The player%s is the winner!\n", this.currentPlayer().toString)
-          gameStatus = WIN
+          gameStatus.writeName("WIN")
           notifyObservers()
           return
         } else {

@@ -17,7 +17,6 @@ class ControllerSpec extends WordSpec with Matchers {
           true
         }
       }
-      controller.add(observer)
       "notify its Observer after creation" in {
         controller.createEmptyGrid("Grid Small")
         observer.updated should be(true)

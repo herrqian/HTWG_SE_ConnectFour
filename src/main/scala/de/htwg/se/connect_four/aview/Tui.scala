@@ -3,15 +3,25 @@ package de.htwg.se.connect_four.aview
 import de.htwg.se.connect_four.controller.{Controller, GameStatus}
 import de.htwg.se.connect_four.util.Observer
 import de.htwg.se.connect_four.model.Player
+import de.htwg.se.sudoku.controller.{CellChanged, GridSizeChanged, winEvent}
+
 import scala.io.StdIn
+import scala.swing.Reactor
 
-class Tui(controller: Controller) extends Observer {
+class Tui(controller: Controller) extends Reactor {
 
-  controller.add(this)
+  listenTo(controller)
   var winnerCheck = false
   var player1 = ""
   var player2 = ""
   var input = ""
+
+  reactions += {
+    case event: GridSizeChanged => printGrid
+    case event: CellChanged     => printGrid
+    case event: winEvent        => {printGrid
+                                    printEnd(event.winner)}
+  }
 
   def processInputLineStart(): Unit = {
 
@@ -34,7 +44,7 @@ class Tui(controller: Controller) extends Observer {
       }
       input = StdIn.readLine()
       processInputLine(input)
-    } while (input != "q" && !winnerCheck)
+    } while (input != "q")
   }
 
   def processInputLine(input: String): Unit = {
@@ -61,11 +71,17 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  override def update(): Boolean = {
+  def printGrid(): Boolean = {
     println(controller.gridToString)
     println(GameStatus.message(controller.gameStatus.mystate.gameStatus))
     if (controller.gameStatus.mystate.gameStatus.equals(GameStatus.WIN))
       winnerCheck = true
     true
+  }
+
+  def printEnd(winner: String): Unit = {
+    println("Player " + winner + " hat gewonnen!")
+    controller.gamereset()
+    processInputLineStart()
   }
 }

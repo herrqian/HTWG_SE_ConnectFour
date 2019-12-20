@@ -34,10 +34,9 @@ class Tui(controller: Controller) extends Observer {
 
   override def update(): Boolean = {
     println(controller.gridToString)
-    println(GameStatus.message(controller.gameStatus))
-    if (controller.gameStatus.equals(GameStatus.WIN))
+    println(GameStatus.message(controller.gameStatus.mystate.gameStatus))
+    if (controller.gameStatus.mystate.gameStatus.equals(GameStatus.WIN))
       winnerCheck = true
-    controller.gameStatus=GameStatus.IDLE
     true
   }
 }

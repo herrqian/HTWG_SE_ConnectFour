@@ -1,35 +1,42 @@
 package de.htwg.se.connect_four.controller
 
-import de.htwg.se.connect_four.model.{Cell, Grid}
-import de.htwg.se.connect_four.util.Observable
+import de.htwg.se.connect_four.model.{Cell, GridInterface}
+import de.htwg.se.connect_four.util.{Observable, UndoManager}
+import de.htwg.se.connect_four.controller.GameStatus._
+import de.htwg.se.connect_four.model.GridFactory
 
-class Controller(var grid: Grid) extends Observable {
+class Controller(var grid: GridInterface) extends Observable {
 
   var playerList = Array(true, false)
+  var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
+  private val undoManager = new UndoManager
 
-  def createEmptyGrid(row: Int, col: Int): Unit = {
-    grid = new Grid(row, col)
+  def createEmptyGrid(s:String): Unit = {
+    grid = GridFactory.getGrid(s)
     notifyObservers()
   }
 
-  def setValueToBottom(column: Int): Int = {
+  def setValueToBottom(column: Int): Unit = {
     val value = if (playerList(0)) {
       1
     } else {
       2
     }
-    if (column > grid.cells.col - 1) {
-      notifyObservers()
-      return -1
-    }
     for (i <- grid.cells.row - 1 to 0 by -1) {
       if (grid.col(column).cell(i).equals(Cell(0))) {
-        grid = grid.set(i, column, value)
-        notifyObservers()
-        return i
+        undoManager.doStep(new SetCommand(i,column, value, this))
+        if (this.checkWinner(i, column)) {
+          printf("The player%s is the winner!\n", this.currentPlayer().toString)
+          gameStatus.writeName("WIN")
+          notifyObservers()
+          return
+        } else {
+          this.changeTurn()
+          notifyObservers()
+          return
+        }
       }
     }
-    -1
   }
 
   def checkWinner(row: Int, col: Int): Boolean = {
@@ -78,4 +85,14 @@ class Controller(var grid: Grid) extends Observable {
   }
 
   def gridToString: String = grid.toString
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers()
+  }
+
+  def redo: Unit ={
+    undoManager.redoStep
+    notifyObservers()
+  }
 }

@@ -12,52 +12,34 @@ class ControllerSpec extends WordSpec with Matchers {
 
         def isUpdated: Boolean = updated
 
-        override def update(): Unit = updated = true
+        override def update(): Boolean = {
+          updated = true
+          true
+        }
       }
       controller.add(observer)
       "notify its Observer after creation" in {
-        controller.createEmptyGrid(4, 5)
+        controller.createEmptyGrid("Grid Small")
         observer.updated should be(true)
-        controller.grid.size should be(20)
+        controller.grid.size should be(42)
       }
       "notify its Observer after setting a cell" in {
         controller.setValueToBottom(0)
         observer.updated should be(true)
-        controller.grid.cell(3, 0).value should be(1)
+        controller.grid.cell(5, 0).value should be(1)
         controller.setValueToBottom(1)
         observer.updated should be(true)
-        controller.grid.cell(3, 1).value should be(1)
+        controller.grid.cell(5, 1).value should be(2)
         controller.setValueToBottom(2)
         observer.updated should be(true)
-        controller.grid.cell(3, 2).value should be(1)
+        controller.grid.cell(5, 2).value should be(1)
         controller.setValueToBottom(3)
         observer.updated should be(true)
-        controller.grid.cell(3, 3).value should be(1)
-        controller.setValueToBottom(10) should be(-1)
-        controller.changeTurn()
-        controller.setValueToBottom(4)
-        controller.grid.cell(3, 4).value should be(2)
-        controller.changeTurn()
-        controller.setValueToBottom(0)
-        controller.setValueToBottom(0)
-        controller.setValueToBottom(0)
-        controller.setValueToBottom(0) should be(-1)
+        controller.grid.cell(5, 3).value should be(2)
       }
       "test the checkWinner function" in {
-        controller.checkWinner(0,1) should be(false)
-        controller.checkWinner(3,3) should be(true)
-        controller.setValueToBottom(1)
-        controller.setValueToBottom(1)
-        controller.setValueToBottom(2)
-        controller.setValueToBottom(2)
-        controller.changeTurn()
-        controller.setValueToBottom(3)
-        controller.changeTurn()
-        controller.setValueToBottom(3)
-        controller.setValueToBottom(3)
-        controller.checkWinner(2,1) should be(true)
-        controller.checkWinner(2,2) should be(true)
-        controller.checkWinner(0,0) should be(true)
+        controller.checkWinner(0,0) should be(false)
+        controller.checkWinner(5,0) should be(false)
       }
       "test the getTrun function" in {
         controller.getTurn(0) should be(true)

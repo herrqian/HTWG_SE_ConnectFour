@@ -1,5 +1,6 @@
 package de.htwg.se.connect_four.controller
-import de.htwg.se.connect_four.model.Grid
+import de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.connect_four.util.Observer
 import org.scalatest.{Matchers, WordSpec}
 class ControllerSpec extends WordSpec with Matchers {

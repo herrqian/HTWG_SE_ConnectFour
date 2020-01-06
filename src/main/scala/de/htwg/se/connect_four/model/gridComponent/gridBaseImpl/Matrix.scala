@@ -1,4 +1,4 @@
-package de.htwg.se.connect_four.model
+package de.htwg.se.connect_four.model.gridComponent.gridBaseImpl
 
 case class Matrix[T] (rows:Vector[Vector[T]]) {
   def this(row:Int, col:Int, filling:T) = this(Vector.tabulate(row, col){(row, col) => filling})

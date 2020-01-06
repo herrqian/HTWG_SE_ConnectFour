@@ -1,4 +1,4 @@
-package de.htwg.se.connect_four.controller
+package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.connect_four.util.Command
 

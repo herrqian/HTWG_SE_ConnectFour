@@ -1,4 +1,5 @@
 package de.htwg.se.connect_four.model
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell, Field}
 import org.scalatest.{Matchers, WordSpec}
 class FieldSpec extends WordSpec with Matchers {
   "a field is a row or a column or a diagonal of a grid" when {

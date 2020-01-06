@@ -1,6 +1,4 @@
-package de.htwg.se.connect_four.controller
-
-import de.htwg.se.connect_four.controller.GameStatus.GameStatus
+package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl
 
 trait Statelike {
   var gameStatus:GameStatus

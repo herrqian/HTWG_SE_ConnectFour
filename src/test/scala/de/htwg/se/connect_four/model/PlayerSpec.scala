@@ -1,6 +1,7 @@
 package de.htwg.se.connect_four.model
 
-import org.scalatest.{WordSpec, Matchers}
+import de.htwg.se.connect_four.model.playerComponent.Player
+import org.scalatest.{Matchers, WordSpec}
 
 class PlayerSpec extends WordSpec with Matchers {
   "A Player" when {

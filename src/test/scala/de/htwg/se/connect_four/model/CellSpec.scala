@@ -1,5 +1,6 @@
 package de.htwg.se.connect_four.model
 
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Cell
 import org.scalatest.{Matchers, WordSpec}
 
 class CellSpec extends WordSpec with Matchers {

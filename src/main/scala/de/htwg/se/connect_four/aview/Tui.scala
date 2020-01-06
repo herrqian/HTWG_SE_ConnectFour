@@ -1,8 +1,10 @@
 package de.htwg.se.connect_four.aview
 
-import de.htwg.se.connect_four.controller.{Controller, GameStatus}
+import de.htwg.se.connect_four.controller.GameStatus
+import de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl.{Controller, GameStatus}
+import de.htwg.se.connect_four.model.playerComponent.Player
 import de.htwg.se.connect_four.util.Observer
-import de.htwg.se.connect_four.model.Player
+
 import scala.io.StdIn
 
 class Tui(controller: Controller) extends Observer {

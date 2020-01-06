@@ -1,8 +1,9 @@
 package de.htwg.se.connect_four
 
 import de.htwg.se.connect_four.aview.Tui
-import de.htwg.se.connect_four.controller.Controller
-import de.htwg.se.connect_four.model.{Grid, Player}
+import de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Grid
+import de.htwg.se.connect_four.model.playerComponent.Player
 
 import scala.io.StdIn.readLine
 

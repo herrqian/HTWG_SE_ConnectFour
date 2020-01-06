@@ -1,11 +1,11 @@
-package de.htwg.se.connect_four.controller
+package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.connect_four.model.{Cell, GridInterface}
+import de.htwg.se.connect_four.model.gridComponent.GridInterface
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell, GridFactory}
 import de.htwg.se.connect_four.util.{Observable, UndoManager}
-import de.htwg.se.connect_four.controller.GameStatus._
-import de.htwg.se.connect_four.model.GridFactory
+import de.htwg.se.connect_four.controller.controllerComponent.ControllerInterface
 
-class Controller(var grid: GridInterface) extends Observable {
+class Controller(var grid: GridInterface) extends ControllerInterface {
 
   var playerList = Array(true, false)
   var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))

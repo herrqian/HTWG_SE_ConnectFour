@@ -20,7 +20,7 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       "test the checkWinner function" in {
         controller.checkWinner(0,0) should be(false)
-        controller.checkWinner(5,0) should be(false)
+        controller.checkWinner(1,0) should be(false)
       }
       "test the getTrun function" in {
         controller.getTurn(0) should be(true)

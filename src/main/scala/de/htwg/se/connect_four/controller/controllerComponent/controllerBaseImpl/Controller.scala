@@ -1,9 +1,10 @@
 package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl
 
+import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
 import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell, GridFactory}
-import de.htwg.se.connect_four.util.{Observable, UndoManager}
-import de.htwg.se.connect_four.controller.controllerComponent.ControllerInterface
+import de.htwg.se.connect_four.util.UndoManager
+import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
 
 class Controller(var grid: GridInterface) extends ControllerInterface {
 
@@ -13,7 +14,8 @@ class Controller(var grid: GridInterface) extends ControllerInterface {
 
   def createEmptyGrid(s:String): Unit = {
     grid = GridFactory.getGrid(s)
-    notifyObservers()
+    gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
+    publish(new GridSizeChanged(s))
   }
 
   def setValueToBottom(column: Int): Unit = {
@@ -26,13 +28,12 @@ class Controller(var grid: GridInterface) extends ControllerInterface {
       if (grid.col(column).cell(i).equals(Cell(0))) {
         undoManager.doStep(new SetCommand(i,column, value, this))
         if (this.checkWinner(i, column)) {
-          printf("The player%s is the winner!\n", this.currentPlayer().toString)
-          gameStatus.writeName("WIN")
-          notifyObservers()
+          gameStatus.changeState()
+          publish(new WinEvent)
           return
         } else {
           this.changeTurn()
-          notifyObservers()
+          publish(new CellChanged)
           return
         }
       }
@@ -84,15 +85,21 @@ class Controller(var grid: GridInterface) extends ControllerInterface {
     2
   }
 
+  def resetPlayerList():Unit= {
+    playerList = Array(true,false)
+  }
+
   def gridToString: String = grid.toString
 
   def undo: Unit = {
     undoManager.undoStep
-    notifyObservers()
+    publish(new CellChanged)
   }
 
   def redo: Unit ={
     undoManager.redoStep
-    notifyObservers()
+    publish(new CellChanged)
   }
+
+  override def getGameStatus(): GameStatus = gameStatus.mystate.gameStatus
 }

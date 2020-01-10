@@ -3,14 +3,12 @@ package de.htwg.se.connect_four
 import de.htwg.se.connect_four.aview.Tui
 import de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Grid
-import de.htwg.se.connect_four.model.playerComponent.Player
-
-import scala.io.StdIn.readLine
+import com.google.inject.Guice
 
 
 object ConnectFour {
+    val injector = Guice.createInjector(new ConnectFourModule)
     val controller = new Controller(new Grid(6,7))
-    var grid = new Grid(6,7)
     val tui = new Tui(controller)
 
     def main(args: Array[String]): Unit = {

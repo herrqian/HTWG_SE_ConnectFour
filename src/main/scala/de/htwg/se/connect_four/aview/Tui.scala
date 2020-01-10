@@ -57,6 +57,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
         controller.createEmptyGrid("Grid Huge")
       case "undo" => controller.undo
       case "redo" => controller.redo
+      case "save" => controller.save
+      case "load" => controller.load
       case _ =>
         if (winnerCheck) {
           println("please start a new game")

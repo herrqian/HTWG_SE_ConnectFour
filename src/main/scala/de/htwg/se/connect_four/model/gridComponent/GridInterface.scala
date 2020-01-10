@@ -1,4 +1,6 @@
-package de.htwg.se.connect_four.model
+package de.htwg.se.connect_four.model.gridComponent
+
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell, Field, Grid, Matrix}
 
 trait GridInterface {
   val cells: Matrix[Cell]

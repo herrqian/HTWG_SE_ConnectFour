@@ -1,14 +1,10 @@
 package de.htwg.se.connect_four.aview
 
-import de.htwg.se.connect_four.controller.{Controller, GameStatus}
-import de.htwg.se.connect_four.util.Observer
-import de.htwg.se.connect_four.model.Player
-import de.htwg.se.connect_four.controller.{CellChanged, GridSizeChanged, winEvent}
-
-import scala.io.StdIn
+import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
 import scala.swing.Reactor
+import scala.io.StdIn
 
-class Tui(controller: Controller) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
   var winnerCheck = false
@@ -16,15 +12,7 @@ class Tui(controller: Controller) extends Reactor {
   var player2 = ""
   var input = ""
 
-  reactions += {
-    case event: GridSizeChanged => printGrid
-    case event: CellChanged     => printGrid
-    case event: winEvent        => {printGrid
-                                    printEnd(event.winner)}
-  }
-
   def processInputLineStart(): Unit = {
-
     println("Player 1 please type in your name:")
     player1 = StdIn.readLine()
     println("Player 2 please type in your name:")
@@ -37,6 +25,13 @@ class Tui(controller: Controller) extends Reactor {
 
   def processInputLineLoop(): Unit = {
     do {
+      if (winnerCheck) {
+        println("Start a new game please!")
+        input = StdIn.readLine()
+        processInputLine(input)
+        winnerCheck = false
+      }
+
       if (controller.getTurn(0)) {
         println(s"$player1, its your turn!")
       } else if (controller.getTurn(1)) {
@@ -51,17 +46,21 @@ class Tui(controller: Controller) extends Reactor {
     input match {
       case "q" => println("The game exit")
       case "n small" =>
-        controller.playerList = Array(true, false)
+        controller.resetPlayerList()
         controller.createEmptyGrid("Grid Small")
       case "n middle" =>
-        controller.playerList = Array(true, false)
+        controller.resetPlayerList()
         controller.createEmptyGrid("Grid Middle")
       case "n huge" =>
-        controller.playerList = Array(true, false)
+        controller.resetPlayerList()
         controller.createEmptyGrid("Grid Huge")
       case "undo" => controller.undo
       case "redo" => controller.redo
       case _ =>
+        if (winnerCheck) {
+          println("please start a new game")
+          return
+        }
         input.toList.filter(c => c != ' ') match {
           case 'i' :: column :: Nil =>
             controller.setValueToBottom(column.asDigit)
@@ -71,18 +70,24 @@ class Tui(controller: Controller) extends Reactor {
     }
   }
 
-  def printGrid(): Boolean = {
-    println(controller.gridToString)
-    println(GameStatus.message(controller.gameStatus.mystate.gameStatus))
-    if (controller.gameStatus.mystate.gameStatus.equals(GameStatus.WIN))
-      winnerCheck = true
-    true
+  reactions += {
+    case event: CellChanged => printTui()
+    case event: GridSizeChanged => printTui()
+    case event: WinEvent => printWinner
   }
 
-  def printEnd(winner: String): Unit = {
-    println("Player " + winner + " hat gewonnen!")
-    controller.gamereset()
-    controller.createEmptyGrid("Grid Small")
-    processInputLineStart()
+  def printTui(): Unit = {
+    println(controller.gridToString)
+    println(GameStatus.message(controller.getGameStatus()))
+  }
+
+  def printWinner():Unit = {
+    println(controller.gridToString)
+    if (controller.currentPlayer() == 1) {
+      printf("%s is the winner!\n",player1)
+    } else {
+      printf("%s is the winner!\n", player2)
+    }
+    winnerCheck = true
   }
 }

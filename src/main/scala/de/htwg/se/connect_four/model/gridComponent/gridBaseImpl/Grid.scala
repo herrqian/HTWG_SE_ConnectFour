@@ -1,4 +1,6 @@
-package de.htwg.se.connect_four.model
+package de.htwg.se.connect_four.model.gridComponent.gridBaseImpl
+
+import de.htwg.se.connect_four.model.gridComponent.GridInterface
 
 import scala.collection.mutable.ArrayBuffer
 

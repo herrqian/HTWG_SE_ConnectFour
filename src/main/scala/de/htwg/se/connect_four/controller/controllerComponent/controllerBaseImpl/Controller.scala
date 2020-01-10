@@ -1,27 +1,29 @@
-package de.htwg.se.connect_four.controller
+package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.connect_four.model.{Cell, GridInterface}
-import de.htwg.se.connect_four.util.{Observable, UndoManager}
-import de.htwg.se.connect_four.controller.GameStatus._
-import de.htwg.se.connect_four.model.GridFactory
-import de.htwg.se.connect_four.controller.{CellChanged, GridSizeChanged, winEvent}
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.connect_four.ConnectFourModule
+import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameStatus
+import de.htwg.se.connect_four.model.gridComponent.GridInterface
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell}
+import de.htwg.se.connect_four.util.UndoManager
+import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
 
-import scala.swing.Publisher
-
-class Controller(var grid: GridInterface) extends Publisher {
+class Controller @Inject() (var grid: GridInterface) extends ControllerInterface {
 
   var playerList = Array(true, false)
   var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
-  private var undoManager = new UndoManager
-
-  def gamereset(): Unit = {
-    playerList = Array(true, false)
-    gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
-    undoManager = new UndoManager
-  }
+  private val undoManager = new UndoManager
+  val injector = Guice.createInjector(new ConnectFourModule)
 
   def createEmptyGrid(s:String): Unit = {
-    grid = GridFactory.getGrid(s)
+    s match {
+      case "Grid Small" => grid = injector.instance[GridInterface](Names.named(("Grid Small")))
+      case "Grid Middle" => grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
+      case "Grid Huge" => grid = injector.instance[GridInterface](Names.named(("Grid Large")))
+    }
+    gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
     publish(new GridSizeChanged(s))
   }
 
@@ -35,8 +37,8 @@ class Controller(var grid: GridInterface) extends Publisher {
       if (grid.col(column).cell(i).equals(Cell(0))) {
         undoManager.doStep(new SetCommand(i,column, value, this))
         if (this.checkWinner(i, column)) {
-          gameStatus.writeName("WIN")
-          publish(new winEvent(this.currentPlayer().toString()))
+          gameStatus.changeState()
+          publish(new WinEvent)
           return
         } else {
           this.changeTurn()
@@ -92,6 +94,10 @@ class Controller(var grid: GridInterface) extends Publisher {
     2
   }
 
+  def resetPlayerList():Unit= {
+    playerList = Array(true,false)
+  }
+
   def gridToString: String = grid.toString
 
   def undo: Unit = {
@@ -104,5 +110,5 @@ class Controller(var grid: GridInterface) extends Publisher {
     publish(new CellChanged)
   }
 
-  def gridSize:Int = grid.size
+  override def getGameStatus(): GameStatus = gameStatus.mystate.gameStatus
 }

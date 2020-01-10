@@ -5,13 +5,13 @@ import de.htwg.se.connect_four.aview.gui.CellPanel
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
-import de.htwg.se.connect_four.controller._
+import de.htwg.se.connect_four.controller.controllerComponent.ControllerInterface
 
 import scala.io.Source._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: Controller) extends Frame {
+class SwingGui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   contents = new GridPanel(6, 7) {
     for {

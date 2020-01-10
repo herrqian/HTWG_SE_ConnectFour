@@ -1,7 +1,7 @@
 package de.htwg.se.connect_four.aview
 
-import de.htwg.se.connect_four.controller.Controller
-import de.htwg.se.connect_four.model.Grid
+import de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Grid
 import org.scalatest.{Matchers, WordSpec}
 
 class TuiSpec extends WordSpec with Matchers {

@@ -1,4 +1,4 @@
-package de.htwg.se.connect_four.model
+package de.htwg.se.connect_four.model.gridComponent.gridBaseImpl
 
 case class Cell(value: Int) {
 

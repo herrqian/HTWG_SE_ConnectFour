@@ -6,7 +6,7 @@ import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.connect_four.controller.controllerComponent._
 import de.htwg.se.connect_four.model.fileIOComponent.FileIOInterface
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
-import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Grid
+import de.htwg.se.connect_four.model.gridComponent.gridAdvancedImpl.Grid
 import de.htwg.se.connect_four.model.fileIOComponent.fileIoJsonImpl.FileIO
 
 class ConnectFourModule extends AbstractModule with ScalaModule {

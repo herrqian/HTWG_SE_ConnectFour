@@ -37,7 +37,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
       } else if (controller.getTurn(1)) {
         println(s"$player2, its your turn!")
       }
-      input = StdIn.readLine()
+      input = StdIn.readLine() // stuck at this readline at the end of a gui-game
       processInputLine(input)
     } while (input != "q")
   }

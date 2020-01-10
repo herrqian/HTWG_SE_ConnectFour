@@ -20,12 +20,14 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   val fileIo = injector.instance[FileIOInterface]
 
   def save():Unit = {
-    fileIo.save(grid)
+    fileIo.save(grid, playerList)
     publish(new CellChanged)
   }
 
   def load():Unit =  {
-    grid = fileIo.load
+    val data = fileIo.load
+    grid = data._1
+    playerList = data._2
     publish(new CellChanged)
   }
 
@@ -35,6 +37,15 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
       case "Grid Middle" => grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
       case "Grid Huge" => grid = injector.instance[GridInterface](Names.named(("Grid Large")))
     }
+//    if (s.equals("Grid Small")) {
+//      grid = injector.instance[GridInterface](Names.named(("Grid Small")))
+//    }
+//    if (s.equals("Grid Middle")) {
+//      grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
+//    }
+//    if (s.equals("Grid Huge")) {
+//      grid = injector.instance[GridInterface](Names.named(("Grid Large")))
+//    }
     gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
     publish(new GridSizeChanged(s))
   }

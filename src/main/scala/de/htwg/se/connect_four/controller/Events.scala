@@ -1,4 +1,4 @@
-package de.htwg.se.sudoku.controller
+package de.htwg.se.connect_four.controller
 
 import scala.swing.event.Event
 

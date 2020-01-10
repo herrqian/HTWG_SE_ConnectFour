@@ -4,7 +4,7 @@ import de.htwg.se.connect_four.model.{Cell, GridInterface}
 import de.htwg.se.connect_four.util.{Observable, UndoManager}
 import de.htwg.se.connect_four.controller.GameStatus._
 import de.htwg.se.connect_four.model.GridFactory
-import de.htwg.se.sudoku.controller.{CellChanged, GridSizeChanged, winEvent}
+import de.htwg.se.connect_four.controller.{CellChanged, GridSizeChanged, winEvent}
 
 import scala.swing.Publisher
 
@@ -103,4 +103,6 @@ class Controller(var grid: GridInterface) extends Publisher {
     undoManager.redoStep
     publish(new CellChanged)
   }
+
+  def gridSize:Int = grid.size
 }

@@ -3,7 +3,7 @@ package de.htwg.se.connect_four.aview
 import de.htwg.se.connect_four.controller.{Controller, GameStatus}
 import de.htwg.se.connect_four.util.Observer
 import de.htwg.se.connect_four.model.Player
-import de.htwg.se.sudoku.controller.{CellChanged, GridSizeChanged, winEvent}
+import de.htwg.se.connect_four.controller.{CellChanged, GridSizeChanged, winEvent}
 
 import scala.io.StdIn
 import scala.swing.Reactor
@@ -82,6 +82,7 @@ class Tui(controller: Controller) extends Reactor {
   def printEnd(winner: String): Unit = {
     println("Player " + winner + " hat gewonnen!")
     controller.gamereset()
+    controller.createEmptyGrid("Grid Small")
     processInputLineStart()
   }
 }

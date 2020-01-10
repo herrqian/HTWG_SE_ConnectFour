@@ -1,14 +1,20 @@
 package de.htwg.se.connect_four
 
 import com.google.inject.AbstractModule
+import com.google.inject.name.Names
 import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.connect_four.controller.controllerComponent._
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
-import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Grid
+import de.htwg.se.connect_four.model.gridComponent.gridAdvancedImpl.Grid
 
 class ConnectFourModule extends AbstractModule with ScalaModule {
 
+  val defaultRows:Int = 6
+  val defaultCols:Int = 7
+
   override def configure(): Unit = {
+    bindConstant().annotatedWith(Names.named("DefaultRows")).to(defaultRows)
+    bindConstant().annotatedWith(Names.named("DefaultCols")).to(defaultCols)
     bind[GridInterface].to[Grid]
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[GridInterface].annotatedWithName("Grid Small").toInstance(new Grid(6,7))

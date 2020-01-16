@@ -9,6 +9,7 @@ import de.htwg.se.connect_four.model.gridComponent.GridInterface
 import de.htwg.se.connect_four.model.gridComponent.gridAdvancedImpl.Grid
 import de.htwg.se.connect_four.model.fileIOComponent.fileIoJsonImpl.FileIO
 
+
 class ConnectFourModule extends AbstractModule with ScalaModule {
 
   val defaultRows:Int = 6

@@ -17,6 +17,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new ConnectFourModule)
+
   val fileIo = injector.instance[FileIOInterface]
 
   def save():Unit = {
@@ -31,21 +32,28 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     publish(new CellChanged)
   }
 
+  var gridrow = 6
+  var gridcol = 7
+
   def createEmptyGrid(s:String): Unit = {
     s match {
-      case "Grid Small" => grid = injector.instance[GridInterface](Names.named(("Grid Small")))
-      case "Grid Middle" => grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
-      case "Grid Huge" => grid = injector.instance[GridInterface](Names.named(("Grid Large")))
+      case "Grid Small" =>{
+        grid = injector.instance[GridInterface](Names.named(("Grid Small")))
+        gridrow = 6
+        gridcol = 7
+      }
+      case "Grid Middle" => {
+        grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
+        gridrow = 10
+        gridcol = 11
+      }
+      case "Grid Huge" => {
+        grid = injector.instance[GridInterface](Names.named(("Grid Large")))
+        gridrow = 16
+        gridcol = 17
+      }
     }
-//    if (s.equals("Grid Small")) {
-//      grid = injector.instance[GridInterface](Names.named(("Grid Small")))
-//    }
-//    if (s.equals("Grid Middle")) {
-//      grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
-//    }
-//    if (s.equals("Grid Huge")) {
-//      grid = injector.instance[GridInterface](Names.named(("Grid Large")))
-//    }
+    resetPlayerList()
     gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
     publish(new GridSizeChanged(s))
   }
@@ -134,4 +142,8 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   }
 
   override def getGameStatus(): GameStatus = gameStatus.mystate.gameStatus
+
+  override def getGridRow: Int = gridrow
+
+  override def getGridCol: Int = gridcol
 }

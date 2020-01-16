@@ -9,21 +9,13 @@ import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, Cont
 
 class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
-  val label =
-    new Label {
-      text = " " //controller.grid.cell(row, column).toString
-      font = new Font("Verdana", 1, 36)
-    }
-
   var winnerCheck = false;
 
   def redraw = {
-    label.text = " " //controller.grid.cell(row, column).toString
     repaint
   }
 
   contents += new BoxPanel(Orientation.Vertical) {
-    contents += label
     preferredSize = new Dimension(80, 80)
     background = new Color(255, 255, 255)
     border = Swing.BeveledBorder(Swing.Raised)
@@ -38,7 +30,6 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
       }
 
       case e: CellChanged => {
-        label.text = " " //controller.grid.cell(row, column).toString
         if (controller.getGridRow > row && controller.getGridCol > column) {
           this.background = if (controller.grid.cell(row, column).value == 0) {
             new Color(255, 255, 255)
@@ -52,7 +43,6 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
       }
 
       case d: WinEvent => {
-        label.text = " " //controller.grid.cell(row, column).toString
         if (controller.getGridRow > row && controller.getGridCol > column) {
           this.background = if (controller.grid.cell(row, column).value == 0) {
             new Color(255, 255, 255)

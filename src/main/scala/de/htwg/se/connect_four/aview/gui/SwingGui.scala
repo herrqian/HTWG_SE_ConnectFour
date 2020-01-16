@@ -1,13 +1,8 @@
 package de.htwg.se.connect_four.aview.gui
 
-import de.htwg.se.connect_four.aview.gui.CellPanel
-
 import scala.swing._
-import scala.swing.Swing.LineBorder
 import scala.swing.event._
 import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GridSizeChanged, WinEvent}
-
-import scala.io.Source._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
@@ -15,6 +10,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   var cells = Array.ofDim[CellPanel](controller.getGridRow, controller.getGridCol)
   title = "Connect Four"
+
   def gridPanel = new GridPanel(controller.getGridRow, controller.getGridCol) {
     for {
       row <- 0 until controller.getGridRow
@@ -27,7 +23,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
   }
 
-  val statusline = new TextField("Player " + controller.currentPlayer().toString + " it's your Turn!", 20)
+  val statusline = new Label(){text = "Player " + controller.currentPlayer().toString + " it's your Turn!"}
 
   contents = new BorderPanel {
     add(gridPanel, BorderPanel.Position.Center)

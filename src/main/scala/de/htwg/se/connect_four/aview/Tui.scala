@@ -8,8 +8,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
   var winnerCheck = false
-  var player1 = ""
-  var player2 = ""
+  var player1 = "Player1"
+  var player2 = "Player2"
   var input = ""
 
   def processInputLineStart(): Unit = {

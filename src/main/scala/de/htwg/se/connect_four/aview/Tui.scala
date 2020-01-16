@@ -8,12 +8,11 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
   var winnerCheck = false
-  var player1 = ""
-  var player2 = ""
+  var player1 = "Player1"
+  var player2 = "Player2"
   var input = ""
 
   def processInputLineStart(): Unit = {
-
     println("Player 1 please type in your name:")
     player1 = StdIn.readLine()
     println("Player 2 please type in your name:")
@@ -38,7 +37,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
       } else if (controller.getTurn(1)) {
         println(s"$player2, its your turn!")
       }
-      input = StdIn.readLine()
+      input = StdIn.readLine() // stuck at this readline at the end of a gui-game
       processInputLine(input)
     } while (input != "q")
   }

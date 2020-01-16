@@ -1,6 +1,7 @@
 package de.htwg.se.connect_four.controller.controllerComponent
 
 import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameStatus
+import de.htwg.se.connect_four.model.gridComponent.GridInterface
 
 import scala.swing.Publisher
 
@@ -16,6 +17,9 @@ trait ControllerInterface extends Publisher {
   def getGameStatus():GameStatus
   def undo:Unit
   def redo:Unit
+  def getGridRow:Int
+  def getGridCol:Int
+  var grid: GridInterface
 }
 
 import scala.swing.event.Event

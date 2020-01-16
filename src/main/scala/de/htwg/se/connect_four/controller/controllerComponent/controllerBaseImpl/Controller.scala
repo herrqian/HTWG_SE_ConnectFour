@@ -1,19 +1,43 @@
 package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.connect_four.ConnectFourModule
 import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
-import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell, GridFactory}
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell}
 import de.htwg.se.connect_four.util.UndoManager
 import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
 
-class Controller(var grid: GridInterface) extends ControllerInterface {
+class Controller @Inject() (var grid: GridInterface) extends ControllerInterface {
 
   var playerList = Array(true, false)
   var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
   private val undoManager = new UndoManager
+  val injector = Guice.createInjector(new ConnectFourModule)
+  var gridrow = 6
+  var gridcol = 7
 
   def createEmptyGrid(s:String): Unit = {
-    grid = GridFactory.getGrid(s)
+    s match {
+      case "Grid Small" =>{
+        grid = injector.instance[GridInterface](Names.named(("Grid Small")))
+        gridrow = 6
+        gridcol = 7
+      }
+      case "Grid Middle" => {
+        grid = injector.instance[GridInterface](Names.named(("Grid Middle")))
+        gridrow = 10
+        gridcol = 11
+      }
+      case "Grid Huge" => {
+        grid = injector.instance[GridInterface](Names.named(("Grid Large")))
+        gridrow = 16
+        gridcol = 17
+      }
+    }
+    resetPlayerList()
     gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
     publish(new GridSizeChanged(s))
   }
@@ -102,4 +126,8 @@ class Controller(var grid: GridInterface) extends ControllerInterface {
   }
 
   override def getGameStatus(): GameStatus = gameStatus.mystate.gameStatus
+
+  override def getGridRow: Int = gridrow
+
+  override def getGridCol: Int = gridcol
 }

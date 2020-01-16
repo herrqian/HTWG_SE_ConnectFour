@@ -17,9 +17,12 @@ trait ControllerInterface extends Publisher {
   def getGameStatus():GameStatus
   def undo:Unit
   def redo:Unit
+  def save:Unit
+  def load:Unit
   def getGridRow:Int
   def getGridCol:Int
   var grid: GridInterface
+
 }
 
 import scala.swing.event.Event

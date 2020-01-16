@@ -16,3 +16,9 @@ case class Matrix[T] (rows:Vector[Vector[T]]) {
     stringVal
   }
 }
+
+object Matrix {
+  import play.api.libs.json._
+  implicit val matrixWrites = Json.writes[Matrix[Cell]]
+  implicit val matrixReads = Json.reads[Matrix[Cell]]
+}

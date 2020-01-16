@@ -6,9 +6,10 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.connect_four.ConnectFourModule
 import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
-import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell}
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Cell
 import de.htwg.se.connect_four.util.UndoManager
 import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
+import de.htwg.se.connect_four.model.fileIOComponent.FileIOInterface
 
 class Controller @Inject() (var grid: GridInterface) extends ControllerInterface {
 
@@ -16,6 +17,21 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new ConnectFourModule)
+
+  val fileIo = injector.instance[FileIOInterface]
+
+  def save():Unit = {
+    fileIo.save(grid, playerList)
+    publish(new CellChanged)
+  }
+
+  def load():Unit =  {
+    val data = fileIo.load
+    grid = data._1
+    playerList = data._2
+    publish(new CellChanged)
+  }
+
   var gridrow = 6
   var gridcol = 7
 

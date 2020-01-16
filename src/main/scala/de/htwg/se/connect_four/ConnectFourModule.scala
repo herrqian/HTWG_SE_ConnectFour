@@ -4,8 +4,11 @@ import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.connect_four.controller.controllerComponent._
+import de.htwg.se.connect_four.model.fileIOComponent.FileIOInterface
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
 import de.htwg.se.connect_four.model.gridComponent.gridAdvancedImpl.Grid
+import de.htwg.se.connect_four.model.fileIOComponent.fileIoJsonImpl.FileIO
+
 
 class ConnectFourModule extends AbstractModule with ScalaModule {
 
@@ -21,6 +24,6 @@ class ConnectFourModule extends AbstractModule with ScalaModule {
     bind[GridInterface].annotatedWithName("Grid Middle").toInstance(new Grid(10,11))
     bind[GridInterface].annotatedWithName("Grid Large").toInstance(new Grid(16,17))
 
+    bind[FileIOInterface].to[FileIO]
   }
-
 }

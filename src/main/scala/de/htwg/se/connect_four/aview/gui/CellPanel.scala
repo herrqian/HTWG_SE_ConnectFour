@@ -16,6 +16,17 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     }
 
   var winnerCheck = false;
+  def redraw = {
+    label.text = " " //controller.grid.cell(row, column).toString
+    this.background = if (controller.grid.cell(row,column).value == 0) {
+      new Color(255,255,255)
+    } else if (controller.grid.cell(row, column).value == 1) {
+      new Color(255,0,0)
+    } else {
+      new Color(0,0,255)
+    }
+    repaint
+  }
 
   contents += new BoxPanel(Orientation.Vertical) {
     contents += label

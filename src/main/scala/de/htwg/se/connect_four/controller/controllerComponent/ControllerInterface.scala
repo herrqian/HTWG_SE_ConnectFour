@@ -17,6 +17,8 @@ trait ControllerInterface extends Publisher {
   def getGameStatus():GameStatus
   def undo:Unit
   def redo:Unit
+  def getGridRow:Int
+  def getGridCol:Int
   var grid: GridInterface
 }
 

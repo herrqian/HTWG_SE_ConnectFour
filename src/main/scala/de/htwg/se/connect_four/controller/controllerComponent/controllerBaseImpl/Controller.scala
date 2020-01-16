@@ -31,11 +31,13 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
         gridrow = 10
         gridcol = 11
       }
-      case "Grid Huge" => {grid = injector.instance[GridInterface](Names.named(("Grid Large")))
+      case "Grid Huge" => {
+        grid = injector.instance[GridInterface](Names.named(("Grid Large")))
         gridrow = 16
         gridcol = 17
       }
     }
+    resetPlayerList()
     gameStatus = Gamestate(StatelikeIDLE(GameStatus.IDLE))
     publish(new GridSizeChanged(s))
   }

@@ -16,65 +16,51 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     }
 
   var winnerCheck = false;
+
   def redraw = {
     label.text = " " //controller.grid.cell(row, column).toString
-    this.background = if (controller.grid.cell(row,column).value == 0) {
-      new Color(255,255,255)
-    } else if (controller.grid.cell(row, column).value == 1) {
-      new Color(255,0,0)
-    } else {
-      new Color(0,0,255)
-    }
     repaint
   }
 
   contents += new BoxPanel(Orientation.Vertical) {
     contents += label
-    preferredSize = new Dimension(70, 70)
-    background = new Color(255,255,255)
+    preferredSize = new Dimension(80, 80)
+    background = new Color(255, 255, 255)
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
     listenTo(controller)
     reactions += {
       case MouseClicked(src, pt, mod, clicks, pops) => {
-        if(!winnerCheck) {
+        if (!winnerCheck) {
           controller.setValueToBottom(column)
           repaint
         }
-        }
-
-      case f: GridSizeChanged => {
-        label.text = " " //controller.grid.cell(row, column).toString
-        this.background = if (controller.grid.cell(row,column).value == 0) {
-          new Color(255,255,255)
-        } else if (controller.grid.cell(row, column).value == 1) {
-          new Color(255,0,0)
-        } else {
-          new Color(0,0,255)
-        }
-        repaint
       }
 
       case e: CellChanged => {
         label.text = " " //controller.grid.cell(row, column).toString
-        this.background = if (controller.grid.cell(row,column).value == 0) {
-          new Color(255,255,255)
-        } else if (controller.grid.cell(row, column).value == 1) {
-          new Color(255,0,0)
-        } else {
-          new Color(0,0,255)
+        if (controller.getGridRow > row && controller.getGridCol > column) {
+          this.background = if (controller.grid.cell(row, column).value == 0) {
+            new Color(255, 255, 255)
+          } else if (controller.grid.cell(row, column).value == 1) {
+            new Color(255, 0, 0)
+          } else {
+            new Color(0, 0, 255)
+          }
         }
         repaint
       }
 
       case d: WinEvent => {
         label.text = " " //controller.grid.cell(row, column).toString
-        this.background = if (controller.grid.cell(row,column).value == 0) {
-          new Color(255,255,255)
-        } else if (controller.grid.cell(row, column).value == 1) {
-          new Color(255,0,0)
-        } else {
-          new Color(0,0,255)
+        if (controller.getGridRow > row && controller.getGridCol > column) {
+          this.background = if (controller.grid.cell(row, column).value == 0) {
+            new Color(255, 255, 255)
+          } else if (controller.grid.cell(row, column).value == 1) {
+            new Color(255, 0, 0)
+          } else {
+            new Color(0, 0, 255)
+          }
         }
         winnerCheck = true
         repaint

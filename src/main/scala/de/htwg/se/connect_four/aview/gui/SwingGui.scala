@@ -5,7 +5,7 @@ import de.htwg.se.connect_four.aview.gui.CellPanel
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
-import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GridSizeChanged}
+import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GridSizeChanged, WinEvent}
 
 import scala.io.Source._
 
@@ -27,7 +27,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
   }
 
-  val statusline = new TextField(controller.getGameStatus().toString, 20)
+  val statusline = new TextField("Player " + controller.currentPlayer().toString + " it's your Turn!", 20)
 
   contents = new BorderPanel {
     add(gridPanel, BorderPanel.Position.Center)
@@ -63,10 +63,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       resize(row,col)
     }
     case event: CellChanged     => redraw
+    case event: WinEvent        => printWinner
   }
 
   def resize(gridrow: Int, gridcol:Int) = {
     cells = Array.ofDim[CellPanel](controller.getGridRow, controller.getGridCol)
+    statusline.text = "Player " + controller.currentPlayer().toString + " it's your Turn!"
     contents = new BorderPanel {
       add(gridPanel, BorderPanel.Position.Center)
       add(statusline, BorderPanel.Position.North)
@@ -78,7 +80,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       row <- 0 until controller.getGridRow
       column <- 0 until controller.getGridCol
     } cells(row)(column).redraw
-    statusline.text = controller.getGameStatus().toString
+    statusline.text = "Player " + controller.currentPlayer().toString + " it's your Turn!"
+    repaint
+  }
+
+  def printWinner = {
+    statusline.text = "Player " + controller.currentPlayer().toString + " won!"
     repaint
   }
 }

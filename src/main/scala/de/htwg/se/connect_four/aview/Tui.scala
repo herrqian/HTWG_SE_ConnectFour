@@ -13,13 +13,6 @@ class Tui(controller: ControllerInterface) extends Reactor {
   var input = ""
 
   def processInputLineStart(): Unit = {
-    println("Player 1 please type in your name:")
-    player1 = StdIn.readLine()
-    println("Player 2 please type in your name:")
-    player2 = StdIn.readLine()
-    println(s"$player1 and $player2, Welcome to Connect Four")
-    println(controller.gridToString)
-
     processInputLineLoop()
   }
 

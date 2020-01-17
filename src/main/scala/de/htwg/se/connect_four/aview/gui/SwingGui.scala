@@ -45,9 +45,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
     contents += new Menu("Options") {
       mnemonic = Key.O
-      contents += new MenuItem(Action("Size 6*7") { controller.createEmptyGrid("Grid Small") })
-      contents += new MenuItem(Action("Size 10*11") { controller.createEmptyGrid("Grid Middle") })
-      contents += new MenuItem(Action("Size 16*17") { controller.createEmptyGrid("Grid Huge") })
+      contents += new MenuItem(Action("Small") { controller.createEmptyGrid("Grid Small") })
+      contents += new MenuItem(Action("Middle") { controller.createEmptyGrid("Grid Middle") })
+      contents += new MenuItem(Action("Huge") { controller.createEmptyGrid("Grid Huge") })
     }
   }
 

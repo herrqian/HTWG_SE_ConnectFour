@@ -5,7 +5,5 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 
 class Grid @Inject() (@Named("DefaultRows")row:Int,@Named("DefaultCols")col:Int) extends BaseGrid(row,col) {
-
-
 }
 

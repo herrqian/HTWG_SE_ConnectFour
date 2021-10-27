@@ -4,15 +4,20 @@ import scala.swing._
 import javax.swing.table._
 
 import scala.swing.event._
-import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GridSizeChanged, WinEvent}
+import de.htwg.se.connect_four.controller.controllerComponent.{
+  CellChanged,
+  ControllerInterface,
+  GridSizeChanged,
+  WinEvent
+}
 
-
-class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
+class CellPanel(row: Int, column: Int, controller: ControllerInterface)
+    extends FlowPanel {
 
   var winnerCheck = false;
 
   def redraw = {
-    repaint
+    repaint()
   }
 
   contents += new BoxPanel(Orientation.Vertical) {
@@ -25,7 +30,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
       case MouseClicked(src, pt, mod, clicks, pops) => {
         if (!winnerCheck) {
           controller.setValueToBottom(column)
-          repaint
+          repaint()
         }
       }
 
@@ -39,7 +44,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
             new Color(0, 0, 255)
           }
         }
-        repaint
+        repaint()
       }
 
       case d: WinEvent => {
@@ -53,7 +58,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
           }
         }
         winnerCheck = true
-        repaint
+        repaint()
       }
     }
   }

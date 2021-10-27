@@ -3,6 +3,6 @@ package de.htwg.se.connect_four.controller.controllerComponent.controllerBaseImp
 import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameStatus
 
 trait Statelike {
-  var gameStatus:GameStatus
+  var gameStatus: GameStatus
   def handle(gamestate: Gamestate): Unit
 }

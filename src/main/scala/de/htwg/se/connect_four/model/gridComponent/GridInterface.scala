@@ -1,12 +1,17 @@
 package de.htwg.se.connect_four.model.gridComponent
 
-import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{Cell, Field, Grid, Matrix}
+import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.{
+  Cell,
+  Field,
+  Grid,
+  Matrix
+}
 
 trait GridInterface {
   val cells: Matrix[Cell]
 
-  def rows:Int
-  def cols:Int
+  def rows: Int
+  def cols: Int
 
   def cell(row: Int, col: Int): Cell
 
@@ -22,7 +27,7 @@ trait GridInterface {
 }
 
 trait CellInterface {
-  def value:Int
-  def isSet:Boolean
-  def set(value:Int): CellInterface
+  def value: Int
+  def isSet: Boolean
+  def set(value: Int): CellInterface
 }

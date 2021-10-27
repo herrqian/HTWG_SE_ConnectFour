@@ -19,22 +19,23 @@ class MatrixSpec extends WordSpec with Matchers {
     }
 
     "filled" should {
-      val matrix = Matrix(Vector(Vector(Cell(0),Cell(1)), Vector(Cell(0), Cell(2))))
+      val matrix =
+        Matrix(Vector(Vector(Cell(0), Cell(1)), Vector(Cell(0), Cell(2))))
       "give a access to its cells" in {
-        matrix.cell(0,0) should be(Cell(0))
-        matrix.cell(0,1) should be(Cell(1))
-        matrix.cell(1,0) should be(Cell(0))
-        matrix.cell(1,1) should be(Cell(2))
+        matrix.cell(0, 0) should be(Cell(0))
+        matrix.cell(0, 1) should be(Cell(1))
+        matrix.cell(1, 0) should be(Cell(0))
+        matrix.cell(1, 1) should be(Cell(2))
       }
       "replace cells and return a new data structure" in {
-        val returnedMatrix = matrix.replaceCell(0,0,Cell(1))
-        matrix.cell(0,0) should be(Cell(0))
-        returnedMatrix.cell(0,0) should be(Cell(1))
+        val returnedMatrix = matrix.replaceCell(0, 0, Cell(1))
+        matrix.cell(0, 0) should be(Cell(0))
+        returnedMatrix.cell(0, 0) should be(Cell(1))
       }
       "be filled using fill operation" in {
         val returnedMatrix = matrix.fill(Cell(2))
-        returnedMatrix.cell(0,0) should be(Cell(2))
-        returnedMatrix.cell(0,1) should be(Cell(2))
+        returnedMatrix.cell(0, 0) should be(Cell(2))
+        returnedMatrix.cell(0, 1) should be(Cell(2))
       }
     }
   }

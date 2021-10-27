@@ -8,10 +8,17 @@ import de.htwg.se.connect_four.controller.controllerComponent.GameStatus.GameSta
 import de.htwg.se.connect_four.model.gridComponent.GridInterface
 import de.htwg.se.connect_four.model.gridComponent.gridBaseImpl.Cell
 import de.htwg.se.connect_four.util.UndoManager
-import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
+import de.htwg.se.connect_four.controller.controllerComponent.{
+  CellChanged,
+  ControllerInterface,
+  GameStatus,
+  GridSizeChanged,
+  WinEvent
+}
 import de.htwg.se.connect_four.model.fileIOComponent.FileIOInterface
 
-class Controller @Inject() (var grid: GridInterface) extends ControllerInterface {
+class Controller @Inject() (var grid: GridInterface)
+    extends ControllerInterface {
 
   var playerList = Array(true, false)
   var gameStatus: Gamestate = Gamestate(StatelikeIDLE(GameStatus.IDLE))
@@ -20,12 +27,12 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
 
   val fileIo = injector.instance[FileIOInterface]
 
-  def save():Unit = {
+  def save: Unit = {
     fileIo.save(grid, playerList)
     publish(new CellChanged)
   }
 
-  def load():Unit =  {
+  def load: Unit = {
     val data = fileIo.load
     grid = data._1
     playerList = data._2
@@ -35,9 +42,9 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   var gridrow = 6
   var gridcol = 7
 
-  def createEmptyGrid(s:String): Unit = {
+  def createEmptyGrid(s: String): Unit = {
     s match {
-      case "Grid Small" =>{
+      case "Grid Small" => {
         grid = injector.instance[GridInterface](Names.named(("Grid Small")))
         gridrow = 6
         gridcol = 7
@@ -66,7 +73,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     }
     for (i <- grid.cells.row - 1 to 0 by -1) {
       if (grid.col(column).cell(i).equals(Cell(0))) {
-        undoManager.doStep(new SetCommand(i,column, value, this))
+        undoManager.doStep(new SetCommand(i, column, value, this))
         if (this.checkWinner(i, column)) {
           gameStatus.changeState()
           publish(new WinEvent)
@@ -125,8 +132,8 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     2
   }
 
-  def resetPlayerList():Unit= {
-    playerList = Array(true,false)
+  def resetPlayerList(): Unit = {
+    playerList = Array(true, false)
   }
 
   def gridToString: String = grid.toString
@@ -136,7 +143,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     publish(new CellChanged)
   }
 
-  def redo: Unit ={
+  def redo: Unit = {
     undoManager.redoStep
     publish(new CellChanged)
   }

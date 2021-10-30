@@ -5,5 +5,5 @@ class Observable {
 
   def add(s: Observer): Unit = subscribers = subscribers :+ s
 
-  def notifyObservers(): Unit = subscribers.foreach(o => o.update)
+  def notifyObservers(): Unit = subscribers.foreach(o => o.update())
 }

@@ -1,6 +1,12 @@
 package de.htwg.se.connect_four.aview
 
-import de.htwg.se.connect_four.controller.controllerComponent.{CellChanged, ControllerInterface, GameStatus, GridSizeChanged, WinEvent}
+import de.htwg.se.connect_four.controller.controllerComponent.{
+  CellChanged,
+  ControllerInterface,
+  GameStatus,
+  GridSizeChanged,
+  WinEvent
+}
 import scala.swing.Reactor
 import scala.io.StdIn
 
@@ -30,7 +36,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
       } else if (controller.getTurn(1)) {
         println(s"$player2, its your turn!")
       }
-      input = StdIn.readLine() // stuck at this readline at the end of a gui-game
+      input =
+        StdIn.readLine() // stuck at this readline at the end of a gui-game
       processInputLine(input)
     } while (input != "q")
   }
@@ -66,9 +73,9 @@ class Tui(controller: ControllerInterface) extends Reactor {
   }
 
   reactions += {
-    case event: CellChanged => printTui()
+    case event: CellChanged     => printTui()
     case event: GridSizeChanged => printTui()
-    case event: WinEvent => printWinner
+    case event: WinEvent        => printWinner()
   }
 
   def printTui(): Unit = {
@@ -76,10 +83,10 @@ class Tui(controller: ControllerInterface) extends Reactor {
     println(GameStatus.message(controller.getGameStatus()))
   }
 
-  def printWinner():Unit = {
+  def printWinner(): Unit = {
     println(controller.gridToString)
     if (controller.currentPlayer() == 1) {
-      printf("%s is the winner!\n",player1)
+      printf("%s is the winner!\n", player1)
     } else {
       printf("%s is the winner!\n", player2)
     }
